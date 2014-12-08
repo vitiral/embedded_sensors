@@ -80,6 +80,7 @@ class Max6675(SensorBase):
         self._temperature = None
 
         self._handle = spidev.SpiDev(self._bus, self._client)
+        self.cache_lifetime = 1
 
     def __del__(self):
         if hasattr(self, '_handle'):
@@ -87,6 +88,9 @@ class Max6675(SensorBase):
 
     @property
     def temperature(self):
+        return self.get_temperature()
+
+    def get_temperature(self):
         '''Returns a temperature value.  Returns None if no valid value is
         set yet.
 

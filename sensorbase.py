@@ -67,11 +67,8 @@ class SensorBase(object):
                 return
 
         # Get the latest sensor values.
-        try:
-            self._update_callback(**kwargs)
-            self._last_updated = now
-        except:
-            raise
+        self._update_callback(**kwargs)
+        self._last_updated = now
 
         return
 
