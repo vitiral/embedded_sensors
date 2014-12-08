@@ -59,22 +59,20 @@ print sensor.temperature
 
 '''
 
-import sensorbase
+from .sensorbase import SensorBase
 import spidev
-import time
 
-class Max6675(sensorbase.SensorBase):
-    def __init__(self, bus = None, client = None):
+
+class Max6675(SensorBase):
+    def __init__(self, bus, client):
         '''Initializes the sensor.
 
         bus: The SPI bus.
         client: The identifier of the client.
 
         '''
-        assert(bus is not None)
-        assert(client is not None)
 
-        super(Max6675, self).__init__(self._update_sensor_data)
+        super().__init__(self._update_sensor_data)
 
         self._bus = bus
         self._client = client
@@ -94,15 +92,14 @@ class Max6675(sensorbase.SensorBase):
 
         '''
         self._update()
-        return (self._temperature)
+        return self._temperature
 
     def _update_sensor_data(self):
         vals = self._handle.readbytes(2)
         self._temperature = ((vals[0] << 8 | vals[1]) >> 3) * 0.25
 
-if __name__ == '__main__':
-    import spidev
 
+if __name__ == '__main__':
     sensor = Max6675(0, 1)
     for cache in [0, 5]:
         print('**********')
