@@ -103,10 +103,10 @@ class Max6675(sensorbase.SensorBase):
 if __name__ == '__main__':
     import spidev
 
-    sensor = Max6675(0, 0)
+    sensor = Max6675(0, 1)
     for cache in [0, 5]:
-        print '**********'
-        print 'Cache lifetime is %d' % cache
+        print('**********')
+        print('Cache lifetime is {}'.format(cache))
         sensor.cache_lifetime = cache
         for c in range(10):
-            print sensor.temperature
+            print(sensor.temperature)
