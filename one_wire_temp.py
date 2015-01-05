@@ -20,6 +20,7 @@ class OneWireTemp(SensorBase):
     GLOBS = ['28*', '3b*']
 
     def __init__(self, debug=False):
+        super().__init__(self._update_sensor_data)
         self._debug = debug
         self.cache_lifetime = 1
 
@@ -96,6 +97,7 @@ class OneWireTemp(SensorBase):
 
     @property
     def temperatures(self, errors=None):
+        self._update()
         out, oerrors = self._data
         if errors:
             errors.extend(oerrors)
