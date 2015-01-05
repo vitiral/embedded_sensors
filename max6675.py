@@ -67,7 +67,7 @@ except SystemError:
 
 
 class Max6675(SensorBase):
-    def __init__(self, bus, client):
+    def __init__(self, com):
         '''Initializes the sensor.
 
         bus: The SPI bus.
@@ -77,12 +77,9 @@ class Max6675(SensorBase):
 
         super().__init__(self._update_sensor_data)
 
-        self._bus = bus
-        self._client = client
-
         self._temperature = None
 
-        self._handle = spidev.SpiDev(self._bus, self._client)
+        self._handle = spidev.SpiDev(0, com)
         self.cache_lifetime = 1
 
     def __del__(self):

@@ -53,7 +53,7 @@ MCP9808_REG_CONFIG_ALERTPOL    = 0x0002
 MCP9808_REG_CONFIG_ALERTMODE   = 0x0001
 
 
-class MAX31855(Max6675):
+class Max31855(Max6675):
     """Class to represent an Adafruit MAX31855 thermocouple temperature
     measurement board.
     """
@@ -92,7 +92,7 @@ class MAX31855(Max6675):
 
     def _read32(self):
         # Read 32 bits from the SPI bus.
-        raw = self._spi.read(4)
+        raw = self._handle.readbytes(4)
         if raw is None or len(raw) != 4:
             raise RuntimeError('Did not read expected number of bytes from device!')
         value = raw[0] << 24 | raw[1] << 16 | raw[2] << 8 | raw[3]
@@ -103,7 +103,7 @@ class MAX31855(Max6675):
         self._temperature = self._read_temp()
 
 if __name__ == '__main__':
-    sensor = Max6675(0, 1)
+    sensor = Max31855(1)
     for cache in [0, 5]:
         print('**********')
         print('Cache lifetime is {}'.format(cache))
