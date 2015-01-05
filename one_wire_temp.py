@@ -1,3 +1,7 @@
+'''
+Basics of 1 wire protocol gotten from Adafruit:
+    https://learn.adafruit.com/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing?view=all
+'''
 
 import os
 import glob
