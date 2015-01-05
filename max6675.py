@@ -51,7 +51,6 @@ spidev module (https://github.com/doceme/py-spidev) is required.
 
 Example:
 
-import spidev
 import max6675
 
 sensor = max6675.Max6675(0, 0)
