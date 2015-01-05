@@ -26,7 +26,7 @@ import spidev
 
 try:
     from .max6675 import Max6675
-except ImportError:
+except SystemError:
     from max6675 import Max6675
 
 # Default I2C address for device.
