@@ -101,6 +101,9 @@ class OneWireTemp(SensorBase):
             errors.extend(oerrors)
         return out
 
+    def get_temperatures(self):
+        return self.temperatures
+
 if __name__ == '__main__':
     from pprint import pprint
     w = OneWireTemp(True)
