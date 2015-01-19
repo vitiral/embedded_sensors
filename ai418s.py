@@ -2,7 +2,6 @@ import time
 from raspi_i2c import i2c
 import struct
 
-
 DATA_FORMAT = '!BHB'
 
 I2C_SLAVE = 0x0703
