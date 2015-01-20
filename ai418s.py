@@ -19,6 +19,7 @@ PGA = {
 
 class AI418S(object):
     def __init__(self, channel):
+        self.channel = channel
         self.dev = i2c(AI418S_ADDR, 1, I2C_SLAVE)
 
     def read(self, pga=1, current=True):
