@@ -18,12 +18,12 @@ PGA = {
 
 
 class AI418S(object):
-    def __init__(self):
+    def __init__(self, channel):
         self.dev = i2c(AI418S_ADDR, 1, I2C_SLAVE)
 
-    def read(self, channel, pga=1, current=True):
+    def read(self, pga=1, current=True):
         if pga not in PGA: raise ValueError(pga)
-        config_str = STD_CONFIG(tobin(channel), PGA[pga])
+        config_str = STD_CONFIG(tobin(self.channel), PGA[pga])
         config_int = int(config_str, 2)
         config = bytes([config_int])
         #print("Config:", bin(config_int), repr(config))
@@ -45,7 +45,7 @@ class AI418S(object):
 
 if __name__ == '__main__':
     print("running")
-    dev = AI418S()
+    dev = AI418S(0)
     while True:
-        print("Value: ", dev.read(0, 2))
+        print("Value: ", dev.read(2))
 
