@@ -18,29 +18,30 @@ PGA = {
 
 
 class AI418S(object):
-    def __init__(self, channel):
+    def __init__(self, channel, pga=None, current=None):
         self.channel = channel
         self.dev = i2c(AI418S_ADDR, 1, I2C_SLAVE)
+        self._pga = pga
+        self._current = current
 
-    def read(self, pga=1, current=True):
+    def read(self, pga=None, current=None):
+        if pga is None:
+            pga = 1 if self._pga is None else self._pga
+        if current is None:
+            current = True if self._current is None else self._current
         if pga not in PGA: raise ValueError(pga)
         config_str = STD_CONFIG(tobin(self.channel), PGA[pga])
         config_int = int(config_str, 2)
         config = bytes([config_int])
-        #print("Config:", bin(config_int), repr(config))
         self.dev.write(config)
         time.sleep(1)
         data = self.dev.read(4)
-        #print("Got", repr(data))
         data = struct.unpack(DATA_FORMAT, data)
-        #print("Converted:", data)
         value = data[1] + ((data[0] & 0x03) << 16)
         config = data[2]
-        #print("Config:", bin(config), "Data:", value)
         value = (value / 131071) * (2.048 / pga) * (180 / 33)
         if current:
             value = value / 249
-        #print("Value:", value)
         return value
 
 
